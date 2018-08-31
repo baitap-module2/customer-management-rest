@@ -52,4 +52,20 @@ public class CustomerController {
         headers.setLocation(ucBuilder.path("/customers/{id}").buildAndExpand(customer.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+    //    sửa
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
+        System.out.println("Updating Customer " + id);
+        Customer currentCustomer = customerService.findById(id);
+        if (currentCustomer == null) {
+            System.out.println("Customer with id " + id + " not found");
+            return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+        }
+        currentCustomer.setFirstName(customer.getFirstName());
+        currentCustomer.setLastName(customer.getLastName());
+        currentCustomer.setId(customer.getId());
+        customerService.save(currentCustomer);
+        return new ResponseEntity<Customer>(currentCustomer, HttpStatus.OK);
+    }
 }
