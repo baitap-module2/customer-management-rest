@@ -17,4 +17,14 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+
+    //    hiển thị danh sách
+    @RequestMapping(value = "/customers/", method = RequestMethod.GET)
+    public ResponseEntity<List<Customer>> listAllCustomers() {
+        List<Customer> customers = customerService.findAll();
+        if (customers.isEmpty()) {
+            return new ResponseEntity<List<Customer>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);
+    }
 }
