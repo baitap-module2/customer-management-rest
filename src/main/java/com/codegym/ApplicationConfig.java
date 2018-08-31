@@ -1,6 +1,10 @@
 package com.codegym;
 
 
+import com.codegym.repository.CustomerRepository;
+import com.codegym.repository.CustomerRepositoryImpl;
+import com.codegym.service.CustomerService;
+import com.codegym.service.CustomerServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +34,16 @@ import java.util.Properties;
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+
+    @Bean
+    public CustomerRepository customerRepository() {
+        return new CustomerRepositoryImpl();
+    }
+
+    @Bean
+    public CustomerService customerService() {
+        return new CustomerServiceImpl();
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
