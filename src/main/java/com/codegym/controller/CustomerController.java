@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.model.Customer;
 import com.codegym.service.CustomerService;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,8 +44,10 @@ public class CustomerController {
     //    thêm
     @RequestMapping(value = "/customers/", method = RequestMethod.POST)
     public ResponseEntity<Void> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating Customer " + customer.getLastName());
+        System.out.println("Creating Customer ");
+        System.out.println("" + customer);
         customerService.save(customer);
+        System.out.println("Created Customer ");
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/customers/{id}").buildAndExpand(customer.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
